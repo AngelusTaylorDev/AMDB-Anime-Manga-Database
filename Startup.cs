@@ -1,4 +1,5 @@
 using AMDB_Anime_Manga_Database.Data;
+using AMDB_Anime_Manga_Database.Models.Settings;
 using AMDB_Anime_Manga_Database.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +37,9 @@ namespace AMDB_Anime_Manga_Database
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+
+            // Config option i built 
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
