@@ -1,6 +1,8 @@
 using AMDB_Anime_Manga_Database.Data;
 using AMDB_Anime_Manga_Database.Models.Settings;
 using AMDB_Anime_Manga_Database.Services;
+using AMDB_Anime_Manga_Database.Services.Interface;
+using AMDB_Anime_Manga_Database.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,12 +36,33 @@ namespace AMDB_Anime_Manga_Database
                 //options.UseSqlServer( Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddDefaultUI()
+                .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
 
             // Config option i built 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
+            // Adding the Seed Service
+            services.AddTransient<SeedService>();
+
+            // Adding the HTTP Client
+            services.AddHttpClient();
+
+            // Adding the IRemote Service 
+            services.AddScoped<IRemoteService, TMDBService>();
+
+            // Adding the IRemote Service 
+            services.AddScoped<IDataMappingService, TMDBMappingService>();
+
+            // Adding the IImage service 
+            services.AddScoped<IImageService, BasicImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

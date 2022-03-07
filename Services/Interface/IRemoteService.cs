@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AMDB_Anime_Manga_Database.Services.Interfaces
 {
-    public interface IRemoteMovieService
+    public interface IRemoteService
     {
         // Movie 
         Task<MovieDetail> MovieDetailAsync(int id);

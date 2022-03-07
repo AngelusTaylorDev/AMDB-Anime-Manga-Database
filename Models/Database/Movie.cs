@@ -9,12 +9,15 @@ namespace AMDB_Anime_Manga_Database.Models.Database
 {
     public class Movie
     {
+        internal float VoteAverage;
+
         public int Id { get; set; }
         public int MovieId { get; set; }
         public string Title { get; set; }
         public string TagLine { get; set; }
         public string OverView { get; set; }
         public int Runtime { get; set; }
+        public int RunTime { get; internal set; }
 
         // Date
         [DataType(DataType.Date)]
